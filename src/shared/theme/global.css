@@ -1,0 +1,8 @@
+* {
+  margin: 0;
+  color: var(--color-normal-text);
+}
+
+body {
+  font-family: Inter, sans-serif;
+}
