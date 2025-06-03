@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { signUp } from './auth';
+import { signUp } from '~/shared/api';
 
 type Role = 'student' | 'mentor' | 'admin';
 

@@ -5,11 +5,11 @@ import { useTranslation } from 'react-i18next';
 
 import { EyeIcon } from '~/assets/icons/EyeIcon';
 
-import { loginSchema, type LoginFormValues } from '../shared/schemas/loginSchema';
-import { Button } from '../shared/ui/Button/Button';
-import { Input } from '../shared/ui/Input/Input';
-import { login } from './auth';
-import styles from './LoginForm.module.css';
+import { login } from '../../../shared/api/auth';
+import { loginSchema, type LoginFormValues } from '../../../shared/schemas/loginSchema';
+import { Button } from '../../../shared/ui/Button/Button';
+import { Input } from '../../../shared/ui/Input/Input';
+import styles from '../ui/LoginForm.module.css';
 
 export const LoginForm: FC = () => {
   const [showPassword, setShowPassword] = useState(false);

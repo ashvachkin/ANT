@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import { isAuthenticated } from './auth';
-import { LoginForm } from './LoginForm';
-import { SignUpForm } from './SighUpform';
+import { SignUpForm } from '~/pages/RegisterPage/model/SighUpform';
+
+import { LoginForm } from '../pages/LoginPage/model/LoginForm';
+import { isAuthenticated } from '../shared/api/auth';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   if (!isAuthenticated()) {
