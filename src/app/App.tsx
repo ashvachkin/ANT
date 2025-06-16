@@ -1,22 +1,15 @@
 import { useTranslation } from 'react-i18next';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import { SignUpForm } from '~/pages/RegisterPage/model/SighUpform';
 
 import { LoginForm } from '../pages/LoginPage/model/LoginForm';
-import { isAuthenticated } from '../shared/api/auth';
-
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  if (!isAuthenticated()) {
-    return <Navigate to='/login' />;
-  }
-  return children;
-};
+import { ProtectedRoute } from './providers/ProtectedRoute';
 
 const App = () => {
   const { t } = useTranslation();
   return (
-    <div style={{ padding: '20px' }}>
+    <div>
       <Routes>
         <Route path='/login' element={<LoginForm />} />
         <Route path='/signup' element={<SignUpForm />} />

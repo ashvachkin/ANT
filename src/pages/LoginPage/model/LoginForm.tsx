@@ -3,6 +3,7 @@ import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { EyeClosedIcon } from '~/assets/icons/EyeClosedIcon';
 import { EyeIcon } from '~/assets/icons/EyeIcon';
 
 import { login } from '../../../shared/api/auth';
@@ -57,10 +58,11 @@ export const LoginForm: FC = () => {
           {...register('password')}
           error={errors.password?.message}
           rightIcon={
-            <EyeIcon
-              onClick={() => setShowPassword((prev) => !prev)}
-              style={{ cursor: 'pointer' }}
-            />
+            showPassword ? (
+              <EyeIcon onClick={() => setShowPassword(false)} style={{ cursor: 'pointer' }} />
+            ) : (
+              <EyeClosedIcon onClick={() => setShowPassword(true)} style={{ cursor: 'pointer' }} />
+            )
           }
         />
 
