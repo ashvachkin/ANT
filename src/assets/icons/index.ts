@@ -3,4 +3,7 @@ export * from './CalendarIcon';
 export * from './EyeClosedIcon';
 export * from './EyeIcon';
 export * from './LayoutSidebarLeftCollapseIcon';
+export * from './TrashbinIcon';
+export * from './LogoIcon';
+export * from './LogoutIcon';
 export * from './ProfileIcon';
