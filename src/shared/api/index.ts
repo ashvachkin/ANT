@@ -1,67 +1,79 @@
+import { isAxiosError, HttpStatusCode, InternalAxiosRequestConfig } from 'axios';
+
 import { useAuthStore } from '~/store/auth.store';
 
-import { ROUTES } from '../constants/routes';
 import { Api, HttpClient } from './artifacts/generated';
 
-const http = new HttpClient({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
-  withCredentials: true,
-});
+interface ErrorDetails {
+  statusCode: number;
+  message: string | string[];
+  error?: string;
+}
 
-let isRefreshing = false;
-let subscribers: ((token: string) => void)[] = [];
-
-const onRefreshed = (token: string) => {
-  subscribers.forEach((cb) => cb(token));
-  subscribers = [];
-};
-
-const addSubscriber = (cb: (token: string) => void) => {
-  subscribers.push(cb);
-};
-
-http.instance.interceptors.request.use((config) => {
-  const token = useAuthStore.getState().accessToken;
-  if (token) {
-    config.headers = config.headers ?? {};
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
-http.instance.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      if (!isRefreshing) {
-        isRefreshing = true;
-        try {
-          const newAccessToken = await api.iam.authenticationControllerRefreshToken();
-          useAuthStore.getState().setAccessToken(newAccessToken);
-          onRefreshed(newAccessToken);
-        } catch (e) {
-          useAuthStore.getState().clearAccessToken();
-          window.location.replace(ROUTES.HOME);
-          return Promise.reject(e);
-        } finally {
-          isRefreshing = false;
-        }
-      }
-
-      return new Promise((resolve) => {
-        addSubscriber((token: string) => {
-          originalRequest.headers.Authorization = `Bearer ${token}`;
-          resolve(http.instance(originalRequest));
-        });
-      });
-    }
-
-    return Promise.reject(error);
-  },
+export const baseApi = new Api(
+  new HttpClient({
+    baseURL: import.meta.env.VITE_API_BASE_URL,
+    withCredentials: true,
+  }),
 );
 
-export const api = new Api(http) as InstanceType<typeof Api>;
+export const api = new Api(
+  new HttpClient({
+    baseURL: import.meta.env.VITE_API_BASE_URL,
+    withCredentials: true,
+  }),
+);
+
+let refreshPromise: Promise<void> | null = null;
+
+const refreshTokens = async (): Promise<void> => {
+  try {
+    const accessToken = await baseApi.iam.authenticationControllerRefreshToken();
+    useAuthStore.getState().setAccessToken(accessToken);
+  } catch (err) {
+    useAuthStore.getState().clearAuth();
+    return Promise.reject(err);
+  }
+};
+
+const reqInterceptor = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+  const { accessToken } = useAuthStore.getState();
+  if (config.headers && accessToken) {
+    config.headers['Authorization'] = `Bearer ${accessToken}`;
+  }
+  return config;
+};
+
+const resInterceptor = async (error: unknown): Promise<unknown> => {
+  if (!isAxiosError<ErrorDetails>(error) || !error.response || !error.config) {
+    return Promise.reject(error);
+  }
+
+  const status = error.response.status;
+  const originalRequest = error.config as InternalAxiosRequestConfig & {
+    _retry?: boolean;
+  };
+
+  if (status === HttpStatusCode.Unauthorized && !originalRequest._retry) {
+    originalRequest._retry = true;
+
+    if (refreshPromise === null) {
+      refreshPromise = refreshTokens();
+    }
+
+    try {
+      await refreshPromise;
+      return await api.http.instance.request(originalRequest);
+    } catch (refreshError) {
+      return Promise.reject(refreshError);
+    } finally {
+      refreshPromise = null;
+    }
+  }
+
+  return Promise.reject(error);
+};
+
+// Навешиваем interceptors на основной instance
+api.http.instance.interceptors.request.use(reqInterceptor);
+api.http.instance.interceptors.response.use((response) => response, resInterceptor);
