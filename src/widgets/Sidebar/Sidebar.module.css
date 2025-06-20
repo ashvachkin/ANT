@@ -1,0 +1,119 @@
+.sidebar {
+  position: fixed;
+  z-index: 1000;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  inline-size: 250px;
+  block-size: 900px;
+  padding-block: 24px;
+  padding-inline: 8px;
+  overflow: hidden;
+  background: #fff;
+  border-inline-end: 1px solid rgb(0 0 0 / 8%);
+  transition: inline-size 0.3s ease;
+}
+
+.sidebar.closed {
+  inline-size: 80px;
+}
+
+.nav {
+  inline-size: 100%;
+}
+
+.menuList {
+  inline-size: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.menuItem {
+  display: flex;
+  block-size: 56px;
+}
+
+.menuLink {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  inline-size: 100%;
+  block-size: 100%;
+  padding-block: 0;
+  padding-inline: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: inherit;
+  white-space: nowrap;
+  text-decoration: none;
+  border-radius: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.menuLink:hover {
+  background: rgb(0 0 0 / 5%);
+}
+
+.menuLink.active {
+  background: rgb(0 0 0 / 8%);
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 24px;
+}
+
+.sidebar.closed .iconWrapper {
+  margin-inline-start: 15px;
+}
+
+.menuText {
+  inline-size: auto;
+  margin-inline-start: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 1;
+  transition:
+    opacity 0.3s ease,
+    inline-size 0.3s ease,
+    margin 0.3s ease;
+}
+
+.sidebar.closed .menuItem {
+  justify-content: center;
+}
+
+.sidebar.closed .menuLink {
+  inline-size: 56px;
+  padding: 0;
+  border-radius: 12px;
+}
+
+.sidebar.closed .menuText {
+  inline-size: 0;
+  margin-inline-start: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.sidebarIcon {
+  position: absolute;
+  inset-block-end: 24px;
+  inset-inline-end: 15px;
+  padding: 0;
+  color: rgb(152 152 152);
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: transform 0.3s ease;
+}
+
+.sidebarIcon.rotated {
+  transform: rotate(180deg);
+}

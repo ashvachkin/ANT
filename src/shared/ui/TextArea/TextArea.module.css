@@ -1,0 +1,28 @@
+.textareaWrapper {
+  position: relative;
+  display: inline-block;
+  margin-block-start: 1rem;
+}
+
+.textareaWrapper.skeleton {
+  inline-size: 300px;
+  block-size: 150px;
+}
+
+.customTextarea {
+  box-sizing: border-box;
+  padding: 1rem;
+  overflow: auto;
+  resize: none;
+  border: 1.5px solid var(--color-border-default);
+  border-radius: var(--input-radius);
+}
+
+.resizeHandle {
+  position: absolute;
+  inset-block-end: 8px;
+  inset-inline-end: 8px;
+  inline-size: 16px;
+  block-size: 16px;
+  cursor: se-resize;
+}

@@ -7,10 +7,14 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   rightIcon?: React.ReactNode;
   error?: string;
+  className?: string;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, rightIcon, error, value, defaultValue, onBlur, onFocus, onChange, ...rest }, ref) => {
+  (
+    { label, rightIcon, error, className, value, defaultValue, onBlur, onFocus, onChange, ...rest },
+    ref,
+  ) => {
     const [isFocused, setIsFocused] = useState(false);
     const [hasValue, setHasValue] = useState(
       value !== undefined ? Boolean(value) : Boolean(defaultValue),
@@ -35,7 +39,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const isActive = isFocused || hasValue;
 
     return (
-      <div className={styles.inputWrapper}>
+      <div className={clsx(styles.inputWrapper, className)}>
         <label className={clsx(styles.label, isActive && styles.labelActive)}>{label}</label>
         <div className={clsx(styles.inputInner, error && styles.inputError)}>
           <input

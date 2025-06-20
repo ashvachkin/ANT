@@ -1,0 +1,232 @@
+/* Profile.module.css */
+.wrapper {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 304px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  inline-size: 1088px;
+  block-size: 1497px;
+  padding: 0;
+}
+
+.header {
+  position: static;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  inline-size: 1088px;
+  block-size: 116px;
+  padding-block: 32px;
+  padding-inline: 0;
+  margin-block: 32px;
+  margin-inline: 0;
+  border-block-end: 1px solid rgb(0 0 0 / 8%);
+}
+
+.header h1 {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 52px;
+  color: rgb(0 0 0);
+  letter-spacing: -1px;
+}
+
+.logouticon {
+  cursor: pointer;
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  inline-size: 212px;
+  block-size: 168px;
+}
+
+.profile {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  inline-size: 1088px;
+  block-size: 168px;
+  margin-block: 16px;
+  margin-inline: 0;
+}
+
+.avatarWrapper {
+  position: relative;
+  inline-size: 100%;
+  block-size: 168px;
+  margin-block-start: -30px;
+}
+
+.avatar {
+  inline-size: 168px;
+  block-size: 168px;
+  object-fit: cover;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+.changeAvatarButton {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 212px;
+  block-size: 44px;
+  padding-block: 12px;
+  padding-inline: 14px;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid rgb(0 0 0 / 10%);
+  border-radius: 32px;
+}
+
+.avatarPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 168px;
+  block-size: 168px;
+  font-family: Inter, sans-serif;
+  font-size: 32px;
+  font-weight: bold;
+  color: #000;
+  user-select: none;
+  background-color: #e0e0e0;
+  border-radius: 50%;
+}
+
+.nameBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  block-size: 65px;
+  margin-block: 16px;
+  margin-block-start: -20px;
+  margin-inline: 0;
+}
+
+.fullName {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 128%;
+  color: #000;
+  letter-spacing: -1.44px;
+}
+
+.username {
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: rgb(0 0 0 / 55%);
+}
+
+.description {
+  inline-size: 100%;
+  margin-block: 16px;
+  margin-block-start: -20px;
+  margin-inline: 0;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #000;
+}
+
+.linksBlock {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: flex-start;
+  margin-block: 0 16px;
+  margin-block-start: -30px;
+  margin-inline: 0;
+}
+
+.linkItem {
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: rgb(79 16 255);
+  text-decoration: none;
+}
+
+.editSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  inline-size: 100%;
+  padding-block-start: 24px;
+  margin-inline: 0;
+}
+
+.sectionTitle {
+  font-family: Inter, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+  color: rgb(0 0 0);
+}
+
+.inputsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  inline-size: 100%;
+  max-inline-size: 536px;
+}
+
+.inputInline {
+  inline-size: 536px;
+}
+
+.aboutBlock {
+  position: static;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  inline-size: 1088px;
+  block-size: 312px;
+  padding: 0;
+  margin-block: 24px;
+  margin-inline: 0;
+}
+
+.aboutTitle {
+  position: static;
+  inline-size: 1088px;
+  block-size: 24px;
+  margin-block: 16px;
+  margin-inline: 0;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: rgb(0 0 0);
+  user-select: none;
+}

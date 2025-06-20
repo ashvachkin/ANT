@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { EyeClosedIcon } from '~/assets/icons/EyeClosedIcon';
 import { EyeIcon } from '~/assets/icons/EyeIcon';
+import { ROUTES } from '~/shared/constants/routes';
 
 import { login } from '../../../shared/api/auth';
 import { loginSchema, type LoginFormValues } from '../../../shared/schemas/loginSchema';
@@ -28,7 +29,7 @@ export const LoginForm: FC = () => {
   const onSubmit = async (data: LoginFormValues) => {
     try {
       await login(data);
-      window.location.href = '/';
+      window.location.href = ROUTES.PROFILE;
     } catch (error: unknown) {
       if (error instanceof Error) {
         setError('password', {

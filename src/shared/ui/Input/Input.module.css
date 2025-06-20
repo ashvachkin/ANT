@@ -1,11 +1,3 @@
-.inputWrapper {
-  position: relative;
-  inline-size: 350px;
-  block-size: 56px;
-  margin-block: 2px;
-  margin-inline: 0;
-}
-
 .label {
   position: absolute;
   inset-block-start: 50%;
@@ -56,4 +48,12 @@
   align-items: center;
   cursor: pointer;
   user-select: none;
+}
+
+.inputWrapper {
+  position: relative;
+  inline-size: 350px;
+  block-size: 56px;
+  margin-block: 2px;
+  margin-inline: 0;
 }
