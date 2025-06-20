@@ -1,0 +1,198 @@
+.compact {
+  --scale: 0.5;
+}
+
+.bold {
+  font-weight: var(--fw-bold);
+}
+
+.regular {
+  font-weight: var(--fw-regular);
+}
+
+.centered {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+.paragraph1,
+.paragraph2,
+.paragraph3,
+.caption1,
+.caption2,
+.button1,
+.button2 {
+  font-family: var(--ff-main);
+}
+
+.h1 {
+  font-size: calc(var(--fs-h1) * var(--scale));
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+
+.h2 {
+  font-size: calc(var(--fs-h2) * var(--scale));
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.h3 {
+  font-size: calc(var(--fs-h3) * var(--scale));
+  line-height: 1.16;
+  letter-spacing: -0.035em;
+}
+
+.h4 {
+  font-size: calc(var(--fs-h4) * var(--scale));
+  line-height: 1.28;
+  letter-spacing: -0.045em;
+}
+
+.h5 {
+  font-size: calc(var(--fs-h5) * var(--scale));
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+}
+
+.h6 {
+  font-size: calc(var(--fs-h6) * var(--scale));
+  line-height: 1.28;
+  letter-spacing: 0;
+}
+
+.paragraph1 {
+  font-size: calc(var(--fs-p1) * var(--scale));
+  line-height: 1.47;
+}
+
+.paragraph2 {
+  font-size: calc(var(--fs-p2) * var(--scale));
+  line-height: 1.5;
+}
+
+.paragraph3 {
+  font-size: calc(var(--fs-p3) * var(--scale));
+  line-height: 1.43;
+}
+
+.caption1 {
+  font-size: calc(var(--fs-c1) * var(--scale));
+  line-height: 1.33;
+}
+
+.caption2 {
+  font-size: calc(var(--fs-c2) * var(--scale));
+  line-height: 1.4;
+}
+
+.button1 {
+  font-size: calc(var(--fs-b1) * var(--scale));
+  line-height: 1.26;
+}
+
+.button2 {
+  font-size: calc(var(--fs-b2) * var(--scale));
+  line-height: 1.33;
+}
+
+.h1.skeleton {
+  inline-size: 100%;
+  max-inline-size: 10ch;
+  block-size: calc(var(--fs-h1) * var(--scale));
+  border-radius: 0.25rem;
+}
+
+.h2.skeleton {
+  inline-size: 100%;
+  max-inline-size: 10ch;
+  block-size: calc(var(--fs-h2) * var(--scale));
+  border-radius: 0.25rem;
+}
+
+.h3.skeleton {
+  inline-size: 100%;
+  max-inline-size: 10ch;
+  block-size: calc(var(--fs-h3) * var(--scale));
+  border-radius: 0.25rem;
+}
+
+.h4.skeleton {
+  inline-size: 100%;
+  max-inline-size: 10ch;
+  block-size: calc(var(--fs-h4) * var(--scale));
+  border-radius: 0.25rem;
+}
+
+.h5.skeleton {
+  inline-size: 100%;
+  max-inline-size: 10ch;
+  block-size: calc(var(--fs-h5) * var(--scale));
+  border-radius: 0.25rem;
+}
+
+.h6.skeleton {
+  inline-size: 100%;
+  max-inline-size: 10ch;
+  block-size: calc(var(--fs-h6) * var(--scale));
+  border-radius: 0.25rem;
+}
+
+.paragraph1.skeleton {
+  inline-size: 100%;
+  max-inline-size: 10ch;
+  block-size: calc(var(--fs-p1) * var(--scale));
+  border-radius: 0.25rem;
+}
+
+.paragraph2.skeleton {
+  inline-size: 100%;
+  max-inline-size: 10ch;
+  block-size: calc(var(--fs-p2) * var(--scale));
+  border-radius: 0.25rem;
+}
+
+.paragraph3.skeleton {
+  inline-size: 100%;
+  max-inline-size: 10ch;
+  block-size: calc(var(--fs-p3) * var(--scale));
+  border-radius: 0.25rem;
+}
+
+.caption1.skeleton {
+  inline-size: 100%;
+  max-inline-size: 10ch;
+  block-size: calc(var(--fs-c1) * var(--scale));
+  border-radius: 0.25rem;
+}
+
+.caption2.skeleton {
+  inline-size: 100%;
+  max-inline-size: 10ch;
+  block-size: calc(var(--fs-c2) * var(--scale));
+  border-radius: 0.25rem;
+}
+
+.button1.skeleton {
+  inline-size: 100%;
+  max-inline-size: 10ch;
+  block-size: calc(var(--fs-b1) * var(--scale));
+  border-radius: 0.25rem;
+}
+
+.button2.skeleton {
+  inline-size: 100%;
+  max-inline-size: 10ch;
+  block-size: calc(var(--fs-b2) * var(--scale));
+  border-radius: 0.25rem;
+}
+
+.colorGray {
+  color: var(--color-disabled);
+}
