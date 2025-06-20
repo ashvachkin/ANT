@@ -74,6 +74,5 @@ const resInterceptor = async (error: unknown): Promise<unknown> => {
   return Promise.reject(error);
 };
 
-// Навешиваем interceptors на основной instance
 api.http.instance.interceptors.request.use(reqInterceptor);
 api.http.instance.interceptors.response.use((response) => response, resInterceptor);
