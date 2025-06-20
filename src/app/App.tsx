@@ -1,5 +1,29 @@
-export const App = () => {
-  const heading = 'ANT';
+import { useTranslation } from 'react-i18next';
+import { Routes, Route } from 'react-router-dom';
 
-  return <h1>{heading}</h1>;
+import { LoginForm } from '../pages/LoginPage/model/LoginForm';
+import { ProtectedRoute } from './providers/ProtectedRoute';
+
+const App = () => {
+  const { t } = useTranslation();
+
+  return (
+    <div>
+      <Routes>
+        <Route path='/login' element={<LoginForm />} />
+        {/* <Route path='/signup' element={<SignUpForm />} /> */}
+        <Route
+          path='/'
+          element={
+            <ProtectedRoute>
+              <div>
+                <h1>{t('auth.welcome')}</h1>
+              </div>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </div>
+  );
 };
+export { App };

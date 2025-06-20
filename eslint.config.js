@@ -98,7 +98,6 @@ export default tsEslintConfig(
       'no-duplicate-imports': 'error',
       'perfectionist/sort-imports': ['error', { type: 'natural', order: 'asc' }],
       'react/jsx-curly-brace-presence': 'error',
-      'react/jsx-newline': ['error', { prevent: true }],
       'react/jsx-no-literals': 'error',
       'react/jsx-no-useless-fragment': 'error',
       'react/prop-types': 'off',
