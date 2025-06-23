@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 
 type AuthState = {
   accessToken: string | null;
+  refreshToken?: string | null;
   setAccessToken: (token: string) => void;
   clearAuth: () => void;
 };

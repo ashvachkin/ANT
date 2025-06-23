@@ -1,78 +1,84 @@
-import { isAxiosError, HttpStatusCode, InternalAxiosRequestConfig } from 'axios';
+import { AxiosError, AxiosRequestConfig, isAxiosError } from 'axios';
 
 import { useAuthStore } from '~/store/auth.store';
 
-import { Api, HttpClient } from './artifacts/generated';
+import { ROUTES } from '../constants/routes';
+import { Api } from './artifacts/generated';
 
-interface ErrorDetails {
-  statusCode: number;
-  message: string | string[];
-  error?: string;
+interface CustomAxiosRequestConfig extends AxiosRequestConfig {
+  _retry?: boolean;
 }
 
-export const baseApi = new Api(
-  new HttpClient({
-    baseURL: import.meta.env.VITE_API_BASE_URL,
-    withCredentials: true,
-  }),
-);
+export const api = new Api({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  withCredentials: true,
+});
 
-export const api = new Api(
-  new HttpClient({
-    baseURL: import.meta.env.VITE_API_BASE_URL,
-    withCredentials: true,
-  }),
-);
+export const apiInstance = api.instance;
 
-let refreshPromise: Promise<void> | null = null;
-
-const refreshTokens = async (): Promise<void> => {
-  try {
-    const accessToken = await baseApi.iam.authenticationControllerRefreshToken();
-    useAuthStore.getState().setAccessToken(accessToken);
-  } catch (err) {
-    useAuthStore.getState().clearAuth();
-    return Promise.reject(err);
-  }
-};
-
-const reqInterceptor = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+// === REQUEST INTERCEPTOR ===
+apiInstance.interceptors.request.use((config) => {
   const { accessToken } = useAuthStore.getState();
-  if (config.headers && accessToken) {
-    config.headers['Authorization'] = `Bearer ${accessToken}`;
+
+  if (accessToken && config.headers) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
   }
+
   return config;
-};
+});
 
-const resInterceptor = async (error: unknown): Promise<unknown> => {
-  if (!isAxiosError<ErrorDetails>(error) || !error.response || !error.config) {
+// === RESPONSE INTERCEPTOR ===
+apiInstance.interceptors.response.use(
+  (response) => response,
+  async (error: unknown) => {
+    if (!isAxiosError(error)) {
+      return Promise.reject(error);
+    }
+
+    const axiosError = error as AxiosError;
+    const originalRequest = axiosError.config as CustomAxiosRequestConfig | undefined;
+
+    if (!originalRequest || !originalRequest.url) {
+      return Promise.reject(error);
+    }
+
+    const isAuthRequest =
+      originalRequest.url.includes('/iam/sign-in') ||
+      originalRequest.url.includes('/iam/refresh-tokens');
+
+    if (isAuthRequest) {
+      return Promise.reject(error);
+    }
+
+    if (axiosError.response?.status === 403) {
+      window.location.href = ROUTES.ERROR403;
+    }
+
+    if (axiosError.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        const { setAccessToken } = useAuthStore.getState();
+
+        const newAccessToken = await api.iam.authenticationControllerRefreshToken();
+
+        setAccessToken(newAccessToken);
+
+        if (originalRequest.headers) {
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        }
+
+        apiInstance.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+
+        return apiInstance(originalRequest);
+      } catch (refreshError) {
+        const { clearAuth } = useAuthStore.getState();
+        clearAuth();
+        window.location.href = ROUTES.LOGIN;
+        return Promise.reject(refreshError);
+      }
+    }
+
     return Promise.reject(error);
-  }
-
-  const status = error.response.status;
-  const originalRequest = error.config as InternalAxiosRequestConfig & {
-    _retry?: boolean;
-  };
-
-  if (status === HttpStatusCode.Unauthorized && !originalRequest._retry) {
-    originalRequest._retry = true;
-
-    if (refreshPromise === null) {
-      refreshPromise = refreshTokens();
-    }
-
-    try {
-      await refreshPromise;
-      return await api.http.instance.request(originalRequest);
-    } catch (refreshError) {
-      return Promise.reject(refreshError);
-    } finally {
-      refreshPromise = null;
-    }
-  }
-
-  return Promise.reject(error);
-};
-
-api.http.instance.interceptors.request.use(reqInterceptor);
-api.http.instance.interceptors.response.use((response) => response, resInterceptor);
+  },
+);

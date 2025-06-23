@@ -1,15 +1,15 @@
 import { useAuthStore } from '~/store/auth.store';
 
-import type { SignInDto } from './artifacts/generated';
-
+import { api } from '.';
 import { ROUTES } from '../constants/routes';
-import { api } from './index';
+import { SignInDto } from './artifacts/generated';
 
 interface ErrorDetails {
   statusCode: number;
   message: string | string[];
   error?: string;
 }
+
 export const login = async (data: SignInDto): Promise<void> => {
   try {
     const accessToken: string = await api.iam.authenticationControllerSignIn(data);
@@ -25,7 +25,7 @@ export const logout = async (): Promise<void> => {
   try {
     await api.iam.authenticationControllerLogout();
   } catch {
-    // игнорируем ошибки
+    // игнорируем ошибки выхода
   }
 
   useAuthStore.getState().clearAuth();
