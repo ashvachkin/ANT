@@ -1,0 +1,33 @@
+.section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 100vh;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-inline-size: 380px;
+  padding: 16px;
+}
+
+.image {
+  inline-size: 100%;
+  margin-block-end: 16px;
+}
+
+.title {
+  margin-block-end: 32px;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+}

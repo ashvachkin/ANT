@@ -1,7 +1,5 @@
-// vite.config.ts
 import react from '@vitejs/plugin-react-swc';
 import { defineConfig } from 'vite';
-import mkcert from 'vite-plugin-mkcert';
 import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
@@ -9,20 +7,16 @@ export default defineConfig({
   build: {
     chunkSizeWarningLimit: 1000,
   },
+
   server: {
-    port: 5300,
-    proxy: {
-      '/api': {
-        target: 'https://back.dev.apexnovatech.com',
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-    },
+    port: 5173,
+    https: false as unknown as undefined,
   },
+
   preview: {
-    port: 5300,
+    port: 5173,
   },
+
   plugins: [
     react(),
     tsconfigPaths(),
@@ -33,6 +27,5 @@ export default defineConfig({
         ref: true,
       },
     }),
-    mkcert(),
   ],
 });

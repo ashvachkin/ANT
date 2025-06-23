@@ -1328,13 +1328,7 @@ export class HttpClient<SecurityDataType = unknown> {
  *
  * Api description
  */
-export class Api<SecurityDataType extends unknown> {
-  http: HttpClient<SecurityDataType>;
-
-  constructor(http: HttpClient<SecurityDataType>) {
-    this.http = http;
-  }
-
+export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
   streamAssigment = {
     /**
      * No description
@@ -1351,7 +1345,7 @@ export class Api<SecurityDataType extends unknown> {
       data: MentorAssignStreamDto,
       params: RequestParams = {},
     ) =>
-      this.http.request<StreamAssignmentDto, void>({
+      this.request<StreamAssignmentDto, void>({
         path: `/stream-assigment/assign`,
         method: 'POST',
         body: data,
@@ -1372,7 +1366,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `200` `(MentorsListItemDto)[]`
      */
     streamAssignmentsControllerGetMentorsList: (streamId: number, params: RequestParams = {}) =>
-      this.http.request<MentorsListItemDto[], any>({
+      this.request<MentorsListItemDto[], any>({
         path: `/stream-assigment/mentors/list/${streamId}`,
         method: 'GET',
         secure: true,
@@ -1391,7 +1385,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `200` `(StreamDto)[]`
      */
     streamAssignmentsControllerGetSteamsList: (params: RequestParams = {}) =>
-      this.http.request<StreamDto[], any>({
+      this.request<StreamDto[], any>({
         path: `/stream-assigment/streams/list`,
         method: 'GET',
         secure: true,
@@ -1413,7 +1407,7 @@ export class Api<SecurityDataType extends unknown> {
       data: MentorUnassignStreamDto,
       params: RequestParams = {},
     ) =>
-      this.http.request<StreamAssignment, any>({
+      this.request<StreamAssignment, any>({
         path: `/stream-assigment/unassign`,
         method: 'POST',
         body: data,
@@ -1436,7 +1430,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `void` У Пользователя нет фото
      */
     usersControllerDeleteImage: (params: RequestParams = {}) =>
-      this.http.request<UserDto, void>({
+      this.request<UserDto, void>({
         path: `/users/image-delete`,
         method: 'POST',
         secure: true,
@@ -1456,7 +1450,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `void` Юзер не найден в БД или Файл отсутствует на диске
      */
     usersControllerDeleteImageForUser: (userId: number, params: RequestParams = {}) =>
-      this.http.request<UserDto, void>({
+      this.request<UserDto, void>({
         path: `/users/image-delete-admin/${userId}`,
         method: 'POST',
         secure: true,
@@ -1481,7 +1475,7 @@ export class Api<SecurityDataType extends unknown> {
       },
       params: RequestParams = {},
     ) =>
-      this.http.request<UserDto[], any>({
+      this.request<UserDto[], any>({
         path: `/users/list`,
         method: 'GET',
         query: query,
@@ -1501,7 +1495,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `200` `UserDto`
      */
     usersControllerFindByEmail: (email: string, params: RequestParams = {}) =>
-      this.http.request<UserDto, any>({
+      this.request<UserDto, any>({
         path: `/users/by-email/${email}`,
         method: 'GET',
         secure: true,
@@ -1520,7 +1514,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `200` `(UserDto)[]`
      */
     usersControllerFindFuzzyByEmail: (email: string, params: RequestParams = {}) =>
-      this.http.request<UserDto[], any>({
+      this.request<UserDto[], any>({
         path: `/users/fuzzy-by-email/${email}`,
         method: 'GET',
         secure: true,
@@ -1540,7 +1534,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `void`
      */
     usersControllerFreezeUser: (id: number, params: RequestParams = {}) =>
-      this.http.request<UserDto, void>({
+      this.request<UserDto, void>({
         path: `/users/freeze-user/${id}`,
         method: 'PATCH',
         secure: true,
@@ -1560,7 +1554,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `void`
      */
     usersControllerRemove: (id: number, params: RequestParams = {}) =>
-      this.http.request<UserDto, void>({
+      this.request<UserDto, void>({
         path: `/users/${id}`,
         method: 'DELETE',
         secure: true,
@@ -1580,7 +1574,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `void`
      */
     usersControllerRestore: (id: number, params: RequestParams = {}) =>
-      this.http.request<UserDto, void>({
+      this.request<UserDto, void>({
         path: `/users/restore/${id}`,
         method: 'GET',
         secure: true,
@@ -1600,7 +1594,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `void`
      */
     usersControllerUnfreezeUser: (id: number, params: RequestParams = {}) =>
-      this.http.request<UserDto, void>({
+      this.request<UserDto, void>({
         path: `/users/unfreeze-user/${id}`,
         method: 'PATCH',
         secure: true,
@@ -1621,7 +1615,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `409` `void`
      */
     usersControllerUpdate: (id: number, data: UpdateUserDto, params: RequestParams = {}) =>
-      this.http.request<UserDto, void>({
+      this.request<UserDto, void>({
         path: `/users/${id}`,
         method: 'PATCH',
         body: data,
@@ -1643,7 +1637,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `400` `void` Ошибки валидации по типу файла или по размеру файла
      */
     usersControllerUploadPicture: (data: ImageUploadDto, params: RequestParams = {}) =>
-      this.http.request<void, void>({
+      this.request<void, void>({
         path: `/users/image-upload`,
         method: 'POST',
         body: data,
@@ -1665,7 +1659,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `200` `void`
      */
     authenticationControllerLogout: (params: RequestParams = {}) =>
-      this.http.request<void, any>({
+      this.request<void, any>({
         path: `/iam/logout`,
         method: 'POST',
         secure: true,
@@ -1682,7 +1676,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `201` `string` Возвращается Access токен как строка и Refresh токен в куке "refreshToken"
      */
     authenticationControllerRefreshToken: (params: RequestParams = {}) =>
-      this.http.request<string, any>({
+      this.request<string, any>({
         path: `/iam/refresh-tokens`,
         method: 'POST',
         format: 'json',
@@ -1699,7 +1693,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `201` `string` Возвращается Access токен как строка и Refresh токен в куке "refreshToken"
      */
     authenticationControllerSignIn: (data: SignInDto, params: RequestParams = {}) =>
-      this.http.request<string, any>({
+      this.request<string, any>({
         path: `/iam/sign-in`,
         method: 'POST',
         body: data,
@@ -1720,7 +1714,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `409` `void` Информация о том что пользователь уже существует
      */
     authenticationControllerSignUp: (data: SignUpDto, params: RequestParams = {}) =>
-      this.http.request<string, void>({
+      this.request<string, void>({
         path: `/iam/sign-up`,
         method: 'POST',
         body: data,
@@ -1744,7 +1738,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `409` `void` Информация о том что Поток с таким именем уже существует
      */
     streamsControllerCreate: (data: CreateStreamsDto, params: RequestParams = {}) =>
-      this.http.request<StreamDto, HttpException | void>({
+      this.request<StreamDto, HttpException | void>({
         path: `/stream/create`,
         method: 'POST',
         body: data,
@@ -1771,7 +1765,7 @@ export class Api<SecurityDataType extends unknown> {
       },
       params: RequestParams = {},
     ) =>
-      this.http.request<StreamDto[], HttpException>({
+      this.request<StreamDto[], HttpException>({
         path: `/stream/list`,
         method: 'GET',
         query: query,
@@ -1792,7 +1786,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `HttpException`
      */
     streamsControllerFindDetails: (streamId: number, params: RequestParams = {}) =>
-      this.http.request<StreamDto, HttpException>({
+      this.request<StreamDto, HttpException>({
         path: `/stream/details/${streamId}`,
         method: 'GET',
         secure: true,
@@ -1812,7 +1806,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `409` `ConflictException`
      */
     streamsControllerFinishStream: (streamId: string, params: RequestParams = {}) =>
-      this.http.request<StreamDto, ConflictException>({
+      this.request<StreamDto, ConflictException>({
         path: `/stream/finish/${streamId}`,
         method: 'POST',
         secure: true,
@@ -1832,7 +1826,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `void` Не найден Поток с указанным Айди
      */
     streamsControllerRemove: (streamId: string, params: RequestParams = {}) =>
-      this.http.request<StreamDto, void>({
+      this.request<StreamDto, void>({
         path: `/stream/delete/${streamId}`,
         method: 'DELETE',
         secure: true,
@@ -1852,7 +1846,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `409` `ConflictException`
      */
     streamsControllerStartStream: (streamId: string, params: RequestParams = {}) =>
-      this.http.request<StreamDto, ConflictException>({
+      this.request<StreamDto, ConflictException>({
         path: `/stream/start/${streamId}`,
         method: 'POST',
         secure: true,
@@ -1876,7 +1870,7 @@ export class Api<SecurityDataType extends unknown> {
       data: UpdateStreamDto,
       params: RequestParams = {},
     ) =>
-      this.http.request<StreamDto, ConflictException>({
+      this.request<StreamDto, ConflictException>({
         path: `/stream/update/${streamId}`,
         method: 'POST',
         body: data,
@@ -1899,7 +1893,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `409` `void` Информация о том что Курс с таким именем уже существует
      */
     coursesControllerCreate: (data: CreateCourseDto, params: RequestParams = {}) =>
-      this.http.request<CourseResponseDto, void>({
+      this.request<CourseResponseDto, void>({
         path: `/course/create`,
         method: 'POST',
         body: data,
@@ -1920,7 +1914,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `200` `(LimitedCourse)[]`
      */
     coursesControllerFindAll: (params: RequestParams = {}) =>
-      this.http.request<LimitedCourse[], any>({
+      this.request<LimitedCourse[], any>({
         path: `/course/list`,
         method: 'GET',
         secure: true,
@@ -1940,7 +1934,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `HttpException`
      */
     coursesControllerFindOne: (id: string, params: RequestParams = {}) =>
-      this.http.request<CourseResponseDto, HttpException>({
+      this.request<CourseResponseDto, HttpException>({
         path: `/course/${id}`,
         method: 'GET',
         secure: true,
@@ -1960,7 +1954,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `HttpException`
      */
     coursesControllerGetCourseWithDetails: (courseId: number, params: RequestParams = {}) =>
-      this.http.request<CourseResponseDto, HttpException>({
+      this.request<CourseResponseDto, HttpException>({
         path: `/course/details/${courseId}`,
         method: 'GET',
         secure: true,
@@ -1980,7 +1974,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `HttpException`
      */
     coursesControllerPublishCourse: (courseId: number, params: RequestParams = {}) =>
-      this.http.request<CourseResponseDto, HttpException>({
+      this.request<CourseResponseDto, HttpException>({
         path: `/course/publish/${courseId}`,
         method: 'POST',
         secure: true,
@@ -2000,7 +1994,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `HttpException`
      */
     coursesControllerRemove: (courseId: string, params: RequestParams = {}) =>
-      this.http.request<CourseResponseDto, HttpException>({
+      this.request<CourseResponseDto, HttpException>({
         path: `/course/delete/${courseId}`,
         method: 'DELETE',
         secure: true,
@@ -2020,7 +2014,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `HttpException`
      */
     coursesControllerUnpublishCourse: (courseId: number, params: RequestParams = {}) =>
-      this.http.request<CourseResponseDto, HttpException>({
+      this.request<CourseResponseDto, HttpException>({
         path: `/course/unpublish/${courseId}`,
         method: 'POST',
         secure: true,
@@ -2044,7 +2038,7 @@ export class Api<SecurityDataType extends unknown> {
       data: UpdateCourseDto,
       params: RequestParams = {},
     ) =>
-      this.http.request<CourseResponseDto, HttpException>({
+      this.request<CourseResponseDto, HttpException>({
         path: `/course/update/${courseId}`,
         method: 'PATCH',
         body: data,
@@ -2066,7 +2060,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `201` `HomeworkDto`
      */
     homeworkControllerCreate: (data: CreateHomeworkDto, params: RequestParams = {}) =>
-      this.http.request<HomeworkDto, any>({
+      this.request<HomeworkDto, any>({
         path: `/homework/create`,
         method: 'POST',
         body: data,
@@ -2088,7 +2082,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `HttpException`
      */
     homeworkControllerFindOne: (id: number, params: RequestParams = {}) =>
-      this.http.request<HomeworkDto, HttpException>({
+      this.request<HomeworkDto, HttpException>({
         path: `/homework/${id}`,
         method: 'GET',
         secure: true,
@@ -2108,7 +2102,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `HttpException`
      */
     homeworkControllerFindOneWithDetails: (id: string, params: RequestParams = {}) =>
-      this.http.request<HomeworkRelationsDto, HttpException>({
+      this.request<HomeworkRelationsDto, HttpException>({
         path: `/homework/details/${id}`,
         method: 'GET',
         secure: true,
@@ -2133,7 +2127,7 @@ export class Api<SecurityDataType extends unknown> {
       },
       params: RequestParams = {},
     ) =>
-      this.http.request<HomeworkDto[], any>({
+      this.request<HomeworkDto[], any>({
         path: `/homework/list`,
         method: 'GET',
         query: query,
@@ -2160,7 +2154,7 @@ export class Api<SecurityDataType extends unknown> {
       },
       params: RequestParams = {},
     ) =>
-      this.http.request<HomeworkDto[], void>({
+      this.request<HomeworkDto[], void>({
         path: `/homework/list-by-stream`,
         method: 'GET',
         query: query,
@@ -2181,7 +2175,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `void` Не найдено ДЗ с указанным Айди
      */
     homeworkControllerRemove: (id: string, params: RequestParams = {}) =>
-      this.http.request<HomeworkDto, void>({
+      this.request<HomeworkDto, void>({
         path: `/homework/delete/${id}`,
         method: 'DELETE',
         secure: true,
@@ -2201,7 +2195,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `void` Не найдена сущность с указанным Айди
      */
     homeworkControllerUpdate: (id: string, data: UpdateHomeworkDto, params: RequestParams = {}) =>
-      this.http.request<HomeworkDto, void>({
+      this.request<HomeworkDto, void>({
         path: `/homework/update/${id}`,
         method: 'PATCH',
         body: data,
@@ -2225,7 +2219,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `409` `void` Имя события не уникально
      */
     eventsControllerCreate: (data: CreateEventDto, params: RequestParams = {}) =>
-      this.http.request<EventResponseDto, void>({
+      this.request<EventResponseDto, void>({
         path: `/events/create`,
         method: 'POST',
         body: data,
@@ -2252,7 +2246,7 @@ export class Api<SecurityDataType extends unknown> {
       },
       params: RequestParams = {},
     ) =>
-      this.http.request<EventResponseDto[], any>({
+      this.request<EventResponseDto[], any>({
         path: `/events/list`,
         method: 'GET',
         query: query,
@@ -2277,7 +2271,7 @@ export class Api<SecurityDataType extends unknown> {
       },
       params: RequestParams = {},
     ) =>
-      this.http.request<MentorScheduleRespDto[], any>({
+      this.request<MentorScheduleRespDto[], any>({
         path: `/events/mentor-schedule`,
         method: 'GET',
         query: query,
@@ -2303,7 +2297,7 @@ export class Api<SecurityDataType extends unknown> {
       },
       params: RequestParams = {},
     ) =>
-      this.http.request<EventResponseDto[], HttpException>({
+      this.request<EventResponseDto[], HttpException>({
         path: `/events/student-schedule`,
         method: 'GET',
         query: query,
@@ -2324,7 +2318,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `void` Не найдено событие с указанным ID
      */
     eventsControllerRemove: (id: string, params: RequestParams = {}) =>
-      this.http.request<EventResponseDto, void>({
+      this.request<EventResponseDto, void>({
         path: `/events/delete/${id}`,
         method: 'DELETE',
         secure: true,
@@ -2345,7 +2339,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `void`
      */
     eventsControllerUpdate: (id: string, data: UpdateEventDto, params: RequestParams = {}) =>
-      this.http.request<EventResponseDto, void>({
+      this.request<EventResponseDto, void>({
         path: `/events/update/${id}`,
         method: 'PATCH',
         body: data,
@@ -2372,7 +2366,7 @@ export class Api<SecurityDataType extends unknown> {
       data: UpdateStatusDto,
       params: RequestParams = {},
     ) =>
-      this.http.request<HomeworkSubmissionDto, ConflictException>({
+      this.request<HomeworkSubmissionDto, ConflictException>({
         path: `/homework-submissions/change-status/${id}`,
         method: 'PATCH',
         body: data,
@@ -2395,7 +2389,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `void` Не найдена Заявка по предоставленному Айди
      */
     homeworkSubmissionsControllerDelete: (id: number, params: RequestParams = {}) =>
-      this.http.request<HomeworkSubmissionDto, void>({
+      this.request<HomeworkSubmissionDto, void>({
         path: `/homework-submissions/delete/${id}`,
         method: 'DELETE',
         secure: true,
@@ -2415,7 +2409,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `409` `ConflictException`
      */
     homeworkSubmissionsControllerGetAllHomeworks: (id: string, params: RequestParams = {}) =>
-      this.http.request<Homework[], ConflictException>({
+      this.request<Homework[], ConflictException>({
         path: `/homework-submissions/homeworks/${id}`,
         method: 'GET',
         secure: true,
@@ -2435,7 +2429,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `NotFoundException`
      */
     homeworkSubmissionsControllerGetHomeworksList: (streamId: number, params: RequestParams = {}) =>
-      this.http.request<HomeworkSubmissionDto[], NotFoundException>({
+      this.request<HomeworkSubmissionDto[], NotFoundException>({
         path: `/homework-submissions/list-for-student/${streamId}`,
         method: 'GET',
         secure: true,
@@ -2466,7 +2460,7 @@ export class Api<SecurityDataType extends unknown> {
       },
       params: RequestParams = {},
     ) =>
-      this.http.request<ListForMentorResponseDto[], NotFoundException>({
+      this.request<ListForMentorResponseDto[], NotFoundException>({
         path: `/homework-submissions/list-for-mentor`,
         method: 'GET',
         query: query,
@@ -2491,7 +2485,7 @@ export class Api<SecurityDataType extends unknown> {
       data: ReviewHomeworkSubmissionDto,
       params: RequestParams = {},
     ) =>
-      this.http.request<HomeworkSubmission, ConflictException>({
+      this.request<HomeworkSubmission, ConflictException>({
         path: `/homework-submissions/review/${homeworkSubmissionId}`,
         method: 'PATCH',
         body: data,
@@ -2518,7 +2512,7 @@ export class Api<SecurityDataType extends unknown> {
       data: UpdateGradeDto,
       params: RequestParams = {},
     ) =>
-      this.http.request<HomeworkSubmissionDto, NotFoundException | ConflictException>({
+      this.request<HomeworkSubmissionDto, NotFoundException | ConflictException>({
         path: `/homework-submissions/sending-grade/${id}`,
         method: 'PATCH',
         body: data,
@@ -2539,7 +2533,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `200` `StudentProfileDto`
      */
     homeworkSubmissionsControllerStudentPerformance: (params: RequestParams = {}) =>
-      this.http.request<StudentProfileDto, any>({
+      this.request<StudentProfileDto, any>({
         path: `/homework-submissions/student/performance`,
         method: 'GET',
         secure: true,
@@ -2563,7 +2557,7 @@ export class Api<SecurityDataType extends unknown> {
       data: CreateHomeworkSubmissionsDto,
       params: RequestParams = {},
     ) =>
-      this.http.request<HomeworkSubmissionDto, void>({
+      this.request<HomeworkSubmissionDto, void>({
         path: `/homework-submissions/submit`,
         method: 'POST',
         body: data,
@@ -2591,7 +2585,7 @@ export class Api<SecurityDataType extends unknown> {
       data: UpdateHomeworkSubmissionsDto,
       params: RequestParams = {},
     ) =>
-      this.http.request<HomeworkSubmissionDto, void>({
+      this.request<HomeworkSubmissionDto, void>({
         path: `/homework-submissions/update/${hsId}`,
         method: 'PATCH',
         body: data,
@@ -2617,7 +2611,7 @@ export class Api<SecurityDataType extends unknown> {
       data: CreateStreamEnrollmentDto,
       params: RequestParams = {},
     ) =>
-      this.http.request<StreamEnrollmentDto, void>({
+      this.request<StreamEnrollmentDto, void>({
         path: `/stream-enrollments/enroll`,
         method: 'POST',
         body: data,
@@ -2638,7 +2632,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `200` `(StreamEnrollmentResponseDto)[]`
      */
     streamEnrollmentsControllerGetList: (params: RequestParams = {}) =>
-      this.http.request<StreamEnrollmentResponseDto[], any>({
+      this.request<StreamEnrollmentResponseDto[], any>({
         path: `/stream-enrollments/streams/list`,
         method: 'GET',
         secure: true,
@@ -2658,7 +2652,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `void` Студент не учится на указанном Потоке
      */
     streamEnrollmentsControllerGetStreamById: (streamId: number, params: RequestParams = {}) =>
-      this.http.request<StreamEnrollmentResponseDto, void>({
+      this.request<StreamEnrollmentResponseDto, void>({
         path: `/stream-enrollments/streams/${streamId}`,
         method: 'GET',
         secure: true,
@@ -2682,7 +2676,7 @@ export class Api<SecurityDataType extends unknown> {
       },
       params: RequestParams = {},
     ) =>
-      this.http.request<StudentDto[], any>({
+      this.request<StudentDto[], any>({
         path: `/stream-enrollments/students/list`,
         method: 'GET',
         query: query,
@@ -2706,7 +2700,7 @@ export class Api<SecurityDataType extends unknown> {
       data: UpdateStreamEnrollmentDto,
       params: RequestParams = {},
     ) =>
-      this.http.request<StreamEnrollmentDto, void>({
+      this.request<StreamEnrollmentDto, void>({
         path: `/stream-enrollments/unenroll`,
         method: 'POST',
         body: data,
@@ -2728,7 +2722,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `200` `(FeedBack)[]`
      */
     feedbackControllerFindAll: (params: RequestParams = {}) =>
-      this.http.request<FeedBack[], any>({
+      this.request<FeedBack[], any>({
         path: `/feedback/all`,
         method: 'GET',
         secure: true,
@@ -2746,7 +2740,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `200` `(Course)[]`
      */
     feedbackControllerFindCourses: (params: RequestParams = {}) =>
-      this.http.request<Course[], any>({
+      this.request<Course[], any>({
         path: `/feedback/courses`,
         method: 'GET',
         format: 'json',
@@ -2763,7 +2757,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `201` `FeedBack`
      */
     feedbackControllerSendFeedback: (data: CreateFeedBackDto, params: RequestParams = {}) =>
-      this.http.request<FeedBack, any>({
+      this.request<FeedBack, any>({
         path: `/feedback/send`,
         method: 'POST',
         body: data,
@@ -2787,7 +2781,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `409` `void` Попытка добавить одно и то же ДЗ на Поток дважды
      */
     streamHomeworksControllerAddToStream: (data: AddToStreamDto, params: RequestParams = {}) =>
-      this.http.request<ShResponseDto, void>({
+      this.request<ShResponseDto, void>({
         path: `/stream-homeworks/add`,
         method: 'POST',
         body: data,
@@ -2808,7 +2802,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `200` `(ShResponseDto)[]`
      */
     streamHomeworksControllerGetAllForStream: (streamId: number, params: RequestParams = {}) =>
-      this.http.request<ShResponseDto[], any>({
+      this.request<ShResponseDto[], any>({
         path: `/stream-homeworks/list/${streamId}`,
         method: 'GET',
         secure: true,
@@ -2827,7 +2821,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `void` Не найдена сущность с указанным Айди
      */
     streamHomeworksControllerRemoveFromStream: (id: number, params: RequestParams = {}) =>
-      this.http.request<any, void>({
+      this.request<any, void>({
         path: `/stream-homeworks/delete/${id}`,
         method: 'DELETE',
         secure: true,
@@ -2846,7 +2840,7 @@ export class Api<SecurityDataType extends unknown> {
      * @response `404` `void` Не найдена сущность с указанным Айди
      */
     streamHomeworksControllerUpdate: (id: number, data: UpdateShDto, params: RequestParams = {}) =>
-      this.http.request<any, void>({
+      this.request<any, void>({
         path: `/stream-homeworks/update/${id}`,
         method: 'PATCH',
         body: data,
