@@ -7,6 +7,7 @@ import { ArchiveIcon } from '~/assets/icons/ArchiveIcon';
 import { CalendarIcon } from '~/assets/icons/CalendarIcon';
 import { LayoutSidebarLeftCollapseIcon } from '~/assets/icons/LayoutSidebarLeftCollapseIcon';
 import { ProfileIcon } from '~/assets/icons/ProfileIcon';
+import { ROUTES } from '~/shared/constants/routes';
 
 import styles from './Sidebar.module.css';
 
@@ -16,9 +17,9 @@ const Sidebar = () => {
   const toggleSidebar = () => setIsOpen((prev) => !prev);
 
   const menuItems = [
-    { path: '/profile', icon: <ProfileIcon />, textKey: 'sidebar.profile' },
-    { path: '/schedule', icon: <CalendarIcon />, textKey: 'sidebar.schedule' },
-    { path: '/homework', icon: <ArchiveIcon />, textKey: 'sidebar.homework' },
+    { path: ROUTES.PROFILE, icon: <ProfileIcon />, textKey: 'sidebar.profile' },
+    { path: ROUTES.SCHEDULE, icon: <CalendarIcon />, textKey: 'sidebar.schedule' },
+    { path: ROUTES.HOMEWORK, icon: <ArchiveIcon />, textKey: 'sidebar.homework' },
   ];
 
   return (
